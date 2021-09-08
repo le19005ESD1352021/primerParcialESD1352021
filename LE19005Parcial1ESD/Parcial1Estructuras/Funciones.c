@@ -11,7 +11,7 @@ int leer(char *filename, int MatrizSalida[][columnas]) {
     FILE *file = fopen(filename, "r"); //lo leemos
     if (file) {
         pass = true;
-        
+
         int MatrizEntrada[filas][columnas]; //asignamos las columnas y datos tienen que ser o con una columna e fila mas para genera espacio extra para correr
         //int MatrizEntrada1[61][9];
         size_t i, j, k; //declaramos variables utilizables
@@ -38,10 +38,10 @@ int leer(char *filename, int MatrizSalida[][columnas]) {
         for (j = 1; j < i; ++j) {//filas
             //printf("Pocision: [%lu]: ", (long unsigned) j);
             for (k = 3; k < ARRAYSIZE(*MatrizEntrada); ++k) {//columna
-                                
+
                 MatrizSalida[j][k] = MatrizEntrada[j][k];
             }
-            
+
         }
         return pass;
     } else {
@@ -58,10 +58,12 @@ int transversa(int MatrizEntrada[][columnas], int MatrizSalida[][columnas]) {
                 MatrizEntrada[e][a];
             }
         }
-        
-        return 0;
+
+        pass = true;
+        return pass;
     } else {
-        return 1;
+        pass = false;
+        return pass;
     }
 }
 
@@ -79,30 +81,37 @@ int multiplicacionM(int MatrizEntrada[][columnas], int MatrizEntrada1[][columnas
      * C22=A21.B12+A22.B22+A23.B32
      */
     if (MatrizEntrada && MatrizEntrada1) {
-        for (int i = 1; i < filas; i++) {//fila de la primer matriz
-            for (int j = 0; j < filas; j++) {//Columnas de la segunda matriz
-                MultMatrizSalida[i][j] = 0;
-                for (int k = 3; k < columnas; k++) {//columnas de la primer matriz
-                    MultMatrizSalida[i][j] = (MultMatrizSalida[i][j]+(MatrizEntrada[i][k] * MatrizEntrada1[k][j]));
+        for (int i = 0; i < filas; i++) {
+            for (int a = 0; a < filas; a++) {
+                int suma = 0;
+                for (int j = 0; j < columnas; j++) {
+                    suma += ((MatrizEntrada[i][j]) * (MatrizEntrada1[j][a]));
                 }
+                MultMatrizSalida[i][a] = suma;
             }
         }
         
-        return 0;
+        pass = true;
+        return pass;
     } else {
-        return 1;
+        pass = false;
+        return pass;
     }
 }
 
 const char integrante() {
     char *Integrante = "LE19005";
-    
+
 
     FILE *Salida = fopen("Integrante.csv", "w");
     if (Salida == NULL) {
         printf("Error no existe el archivo");
         exit(-1);
+        pass = false;
+        return pass;
     } else {
         fprintf(Salida, "%s", Integrante);
+        pass = true;
+        return pass;
     }
 }
